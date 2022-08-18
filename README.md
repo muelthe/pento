@@ -1,5 +1,7 @@
 # Pento
 
+Learning from the excellent Programming Phoenix Liveview (B7.0): https://pragprog.com/titles/liveview/programming-phoenix-liveview/
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
