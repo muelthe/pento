@@ -1,0 +1,29 @@
+<div>
+  <.form
+    let={f}
+    for={@changeset}
+    phx-change="validate"
+    phx-submit="search"
+    >
+    <%= label f, :search %>
+    <%= text_input f, :search, phx_debounce: 1500 %>
+    <%= error_tag f, :search %>
+    <%= submit "Search", phx_disable_with: "Searching...", disabled: !@changeset.valid? %>
+  </.form>
+
+  <%= if @search_ready in [:false] do %>
+    <p>Not ready...</p>
+  <% end %>
+
+  <%= if @search_ready in [:true] do %>
+    <%= if @search_result do %>
+      <p><%= @search_result.sku %></p>
+      <p><%= @search_result.name %></p>
+      <p><%= @search_result.description %></p>
+      <p><%= @search_result.unit_price %></p>
+      <%= live_redirect "View Product", to: Routes.product_show_path(@socket, :show, @search_result.id) %>
+    <% else %>
+      <p>No results.</p>
+    <% end %>
+  <% end %>
+</div>

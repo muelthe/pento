@@ -6,7 +6,7 @@ defmodule Pento.Catalog do
   import Ecto.Query, warn: false
   alias Pento.Repo
 
-  alias Pento.Catalog.Product
+  alias Pento.Catalog.{Product, Search}
 
   @doc """
   Returns the list of products.
@@ -36,6 +36,24 @@ defmodule Pento.Catalog do
 
   """
   def get_product!(id), do: Repo.get!(Product, id)
+
+  @doc """
+  Gets a single product by SKU.
+
+  Raises `Ecto.NoResultsError` if the Product does not exist.
+
+  ## Examples
+
+      iex> get_product_by_sku!(1234567)
+      %Product{}
+
+      iex> get_product_by_sku!(9876543)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_product_by_sku(sku) do
+    Repo.get_by(Product, sku: sku)
+  end
 
   @doc """
   Creates a product.
@@ -103,6 +121,18 @@ defmodule Pento.Catalog do
   end
 
   @doc """
+  Returns an `%Ecto.Changeset{}` for validating product SKU searches
+
+  ## Examples
+
+      iex> change_search(sku)
+      %Ecto.Changeset{data: %Search{}}
+  """
+  def change_search(%Search{} = search, attrs \\ %{}) do
+    Search.changeset(search, attrs)
+  end
+
+  @doc """
   Markdown product price (price must be lower than current value)
 
   ## Examples
@@ -119,4 +149,8 @@ defmodule Pento.Catalog do
     |> Product.markdown_changeset(attrs)
     |> Repo.update()
   end
+
+
+
+
 end

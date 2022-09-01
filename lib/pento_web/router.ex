@@ -91,6 +91,8 @@ defmodule PentoWeb.Router do
       live "/questions/:id/show/edit", QuestionLive.Show, :edit
 
       live "/promo", PromoLive
+
+      live "/search", SearchLive.Index
     end
 
     get "/users/settings", UserSettingsController, :edit
