@@ -25,24 +25,7 @@
     <%= number_input f, :sku %>
     <%= error_tag f, :sku %>
     <p>File uploads</p>
-    <%= for entry <- @uploads.image.entries do %>
-      <p>
-        <%= entry.client_name %> - <%= entry.progress %>
-        <button phx-target={@myself} phx-click="cancel-upload" phx-value-ref={entry.ref}>cancel</button>
-        
-        <%= for err <- upload_errors(@uploads.image, entry) do %>
-          <div class="alert alert-danger">
-            <%= error_to_string(err) %>
-          </div>
-        <% end %>
-
-        <%= for err <- upload_errors(@uploads.image) do %>
-          <div class="alert alert-danger">
-            <%= error_to_string(err) %>
-          </div>
-        <% end %>
-      </p>
-    <% end %>
+    
     
     <div phx-drop-target={ @uploads.image.ref }>
       <%= live_file_input @uploads.image %>
@@ -54,4 +37,22 @@
       phx-click="lv:clear-flash"
       phx-value-key="info"><%= live_flash(@flash, :info) %></p>
   </.form>
+
+  <%= for entry <- @uploads.image.entries do %>
+    <p>
+      <%= entry.client_name %> - <%= entry.progress %>
+      <button phx-target={@myself} phx-click="cancel-upload" phx-value-ref={entry.ref}>cancel</button>
+      
+      <%= for err <- upload_errors(@uploads.image, entry) do %>
+        <div class="alert alert-danger">
+          <%= error_to_string(err) %>
+        </div>
+      <% end %>
+      <%= for err <- upload_errors(@uploads.image) do %>
+        <div class="alert alert-danger">
+          <%= error_to_string(err) %>
+        </div>
+      <% end %>
+    </p>
+  <% end %>
 </div>
