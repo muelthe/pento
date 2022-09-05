@@ -76,6 +76,9 @@ defmodule PentoWeb.Router do
     pipe_through [:browser, :require_authenticated_user]
     live_session :default, on_mount: PentoWeb.UserAuthLive do
       live "/guess", WrongLive
+      live "/promo", PromoLive
+      live "/survey", SurveyLive, :index
+
       live "/products", ProductLive.Index, :index
       live "/products/new", ProductLive.Index, :new
       live "/products/:id/edit", ProductLive.Index, :edit
@@ -89,8 +92,6 @@ defmodule PentoWeb.Router do
 
       live "/questions/:id", QuestionLive.Show, :show
       live "/questions/:id/show/edit", QuestionLive.Show, :edit
-
-      live "/promo", PromoLive
 
       live "/search", SearchLive.Index
     end

@@ -3,11 +3,8 @@ defmodule PentoWeb.UserAuthLive do
   alias Pento.Accounts
 
   def on_mount(_, _params, %{"user_token" => user_token}, socket) do
-    # user = Accounts.get_user_by_session_token(user_token)
-    # socket =
-    #   socket
-    #   |> assign(:current_user, user)
-
+    IO.puts "Assign User with a socket.private:"
+    IO.inspect socket.private
     socket =
       assign_new(socket, :current_user, fn -> Accounts.get_user_by_session_token(user_token) end)
 
