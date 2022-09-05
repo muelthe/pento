@@ -197,4 +197,18 @@ defmodule Pento.Survey do
   def change_rating(%Rating{} = rating, attrs \\ %{}) do
     Rating.changeset(rating, attrs)
   end
+
+  @doc """
+  Gets a single demographic based on the user.
+
+  ## Example
+
+    iex> user = Pento.Accounts.get_user!(123)
+    iex> get_demographic_by_user(user)
+    %Pento.Survey.Demographic{}
+  """
+  def get_demographic_by_user(user) do
+    Demographic.Query.for_user(user)
+    |> Repo.one()
+  end
 end
