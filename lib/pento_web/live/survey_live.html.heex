@@ -1,4 +1,20 @@
-<% # liv/pento_web/live/survey_live.html.heex %>
+<section>
+  <Component.title title={@title}><%= @motd %></Component.title>
+</section>
 <section class="row">
   <h2>Survey</h2>
+</section>
+<section>
+<%= if @demographic do %>
+  <DemographicsLive.Show.details demographic={@demographic} />
+<% else %>
+  <h2>Demographic form coming soon!</h2>
+<% end %>
+</section>
+<section>
+  <.live_component
+    module={PentoWeb.SurveyLive.ListComponent}
+    id="survey_list_component"
+    list={@list}
+  />
 </section>
