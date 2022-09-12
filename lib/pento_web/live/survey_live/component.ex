@@ -13,6 +13,7 @@ defmodule PentoWeb.SurveyLive.Component do
     ~H"""
     <h4>Function component renders a list</h4>
     <button phx-click="add_list">Add list</button>
+    <button phx-click="update_list">update list</button>
     <ul>
     <%= for item <- @list do %>
       <li><%= item %></li>

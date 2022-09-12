@@ -1,4 +1,4 @@
-defmodule PentoWeb.DemographicsLive.Show do
+defmodule PentoWeb.DemographicLive.Show do
   use Phoenix.Component
   use Phoenix.HTML
 
