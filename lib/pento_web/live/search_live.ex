@@ -1,4 +1,4 @@
-defmodule PentoWeb.SearchLive.Index do
+defmodule PentoWeb.SearchLive do
   use PentoWeb, :live_view
 
   alias Pento.Catalog
@@ -10,7 +10,6 @@ defmodule PentoWeb.SearchLive.Index do
         search_ready: [:false],
         search_result: nil
       )
-
     {:ok, socket}
   end
 
@@ -24,10 +23,10 @@ defmodule PentoWeb.SearchLive.Index do
   end
 
   def handle_event("search", %{"search" => %{"search" => search}}, socket) do
-      case Catalog.get_product_by_sku(search) do
-        nil ->
-          {:noreply, assign(socket, search_result: nil, search_ready: :true)}
-        result -> {:noreply, assign(socket, search_result: result, search_ready: :true)}
-      end
+    case Catalog.get_product_by_sku(search) do
+      nil ->
+        {:noreply, assign(socket, search_result: nil, search_ready: :true)}
+      result -> {:noreply, assign(socket, search_result: result, search_ready: :true)}
+    end
   end
 end

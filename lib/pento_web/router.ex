@@ -77,6 +77,7 @@ defmodule PentoWeb.Router do
     live_session :default, on_mount: PentoWeb.UserAuthLive do
       live "/guess", WrongLive
       live "/promo", PromoLive
+      live "/search", SearchLive
       live "/survey", SurveyLive, :index
 
       live "/products", ProductLive.Index, :index
@@ -92,8 +93,6 @@ defmodule PentoWeb.Router do
 
       live "/questions/:id", QuestionLive.Show, :show
       live "/questions/:id/show/edit", QuestionLive.Show, :edit
-
-      live "/search", SearchLive.Index
     end
 
     get "/users/settings", UserSettingsController, :edit
