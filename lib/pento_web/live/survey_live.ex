@@ -1,14 +1,15 @@
 defmodule PentoWeb.SurveyLive do
   use PentoWeb, :live_view
 
-  alias Pento.Survey
+  alias Pento.{Survey, Catalog}
   alias PentoWeb.DemographicLive
-  alias PentoWeb.DemographicLive.Form
+  alias PentoWeb.RatingLive
 
   def mount(_params, _session, socket) do
     {:ok,
       socket
       |> assign_demographic()
+      |> assign_products()
     }
   end
 
@@ -26,5 +27,13 @@ defmodule PentoWeb.SurveyLive do
     socket
     |> put_flash(:info, "Demographic created successfully")
     |> assign(:demographic, demographic)
+  end
+
+  defp assign_products(%{assigns: %{current_user: current_user}} = socket) do
+    assign(socket, :products, list_products(current_user))
+  end
+
+  defp list_products(user) do
+    Catalog.list_products_with_user_rating(user)
   end
 end
