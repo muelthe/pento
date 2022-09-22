@@ -4,13 +4,40 @@ defmodule PentoWeb.SurveyLive do
   alias Pento.{Survey, Catalog}
   alias PentoWeb.DemographicLive
   alias PentoWeb.RatingLive
+  alias Phoenix.LiveView.JS
 
   def mount(_params, _session, socket) do
     {:ok,
       socket
       |> assign_demographic()
       |> assign_products()
+      |> assign_toggle_class()
+      |> assign_toggle_comp()
     }
+  end
+
+  def handle_event("toggle_class", %{"toggle" => "+ expand"}, socket) do
+    {:noreply, assign(socket,
+      toggle_value: "- contract",
+      toggle_display: "show")}
+  end
+
+  def handle_event("toggle_class", %{"toggle" => "- contract"}, socket) do
+    {:noreply, assign(socket,
+      toggle_value: "+ expand",
+      toggle_display: "hide")}
+  end
+
+  def handle_event("toggle_comp", %{"comp" => "+ expand"}, socket) do
+    {:noreply, assign(socket,
+      comp_toggle: true,
+      comp_display_value: "- contract")}
+  end
+
+  def handle_event("toggle_comp", %{"comp" => "- contract"}, socket) do
+    {:noreply, assign(socket,
+      comp_toggle: false,
+      comp_display_value: "+ expand")}
   end
 
   def handle_info({:created_demographic, demographic}, socket) do
@@ -52,5 +79,17 @@ defmodule PentoWeb.SurveyLive do
 
   defp list_products(user) do
     Catalog.list_products_with_user_rating(user)
+  end
+
+  defp assign_toggle_class(socket) do
+    assign(socket,
+    toggle_value: "+ expand",
+    toggle_display: "hide")
+  end
+
+  defp assign_toggle_comp(socket) do
+    assign(socket,
+    comp_toggle: nil,
+    comp_display_value: "+ expand")
   end
 end

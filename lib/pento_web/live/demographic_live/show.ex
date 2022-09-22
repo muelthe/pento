@@ -9,6 +9,7 @@ defmodule PentoWeb.DemographicLive.Show do
       <ul>
         <li>Gender: <%= @demographic.gender %></li>
         <li>Year of birth: <%= @demographic.year_of_birth %></li>
+        <li>Level of education: <%= @demographic.level_of_education %></li>
       </ul>
     </div>
     """

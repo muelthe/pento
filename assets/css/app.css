@@ -118,3 +118,16 @@
   0% { opacity: 1; }
   100% { opacity: 0; }
 }
+
+/* custom */
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+.pad {
+  padding: 15px;
+}

@@ -13,3 +13,20 @@
     current_user={@current_user} />
 <% end %>
 </section>
+<section class="row">
+  <h2>Toggle 1 - CSS</h2>
+  <PentoWeb.SurveyLive.Component.toggle_class toggle_value={@toggle_value} toggle_display={@toggle_display} />
+</section>
+<section class="row">
+  <h2>Toggle 2 - Component swap</h2>
+  <button phx-click="toggle_comp" phx-value-comp={@comp_display_value}><%= @comp_display_value %></button>
+  <%= if @comp_toggle do %>
+    <PentoWeb.SurveyLive.Component.toggle_comp message="Hello, World!"/>
+  <% end %>
+</section>
+<section class="row">
+  <h2>Toggle 3 - JS</h2>
+  <button phx-click={JS.toggle(to: "#hide-by-js")}>Hide</button>
+  <div id="hide-by-js">Hello, World!</div>
+
+</section>

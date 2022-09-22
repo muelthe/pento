@@ -21,4 +21,21 @@ defmodule PentoWeb.SurveyLive.Component do
     </ul>
     """
   end
+
+  def toggle_class(assigns) do
+    ~H"""
+      <button phx-click="toggle_class" phx-value-toggle={@toggle_value}><%= @toggle_value %></button>
+      <div class={@toggle_display}>
+        <h3>Hello, World!</h3>
+      </div>
+    """
+  end
+
+  def toggle_comp(assigns) do
+    ~H"""
+      <div>
+        <h3><%= @message %></h3>
+      </div>
+    """
+  end
 end
