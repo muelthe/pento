@@ -150,8 +150,25 @@ defmodule Pento.Catalog do
     |> Repo.update()
   end
 
+  @doc """
+  Returns a list of products with ratings associtated to the user id
+
+  ## Examples
+
+      iex> list_product_with_user_rating(%{id: 1})
+      [%Product{ratings: [%Rating{}]}, ...]
+
+      iex> list_product_with_user_rating(%{id: 99})
+      [%Product{ratings: []}, ...]
+
+  """
   def list_products_with_user_rating(user) do
     Product.Query.with_user_ratings(user)
+    |> Repo.all()
+  end
+
+  def products_with_average_ratings() do
+    Product.Query.with_average_ratings()
     |> Repo.all()
   end
 
