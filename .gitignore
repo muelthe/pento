@@ -35,3 +35,4 @@ npm-debug.log
 # custom
 live_view_upload*
 default-thumbnail.jpg
+.elixir_ls
