@@ -167,10 +167,25 @@ defmodule Pento.Catalog do
     |> Repo.all()
   end
 
-  def products_with_average_ratings() do
+  @doc """
+  Returns a list of products filtered by age group and with an average rating for each product
+
+  ## Example
+
+    iex> products_with_average_ratings()
+    [{"product1", 2.3}, {"product2", 4.8}, ...]
+  """
+  def products_with_average_ratings(%{age_group_filter: age_group_filter}) do
     Product.Query.with_average_ratings()
+    |> Product.Query.join_users()
+    |> Product.Query.join_demographics()
+    |> Product.Query.filter_by_age_group(age_group_filter)
     |> Repo.all()
   end
 
+  def products_with_zero_ratings do
+    Product.Query.with_zero_ratings()
+    |> Repo.all()
+  end
 
 end
