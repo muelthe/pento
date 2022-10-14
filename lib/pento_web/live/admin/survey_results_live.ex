@@ -27,21 +27,31 @@ defmodule PentoWeb.Admin.SurveyResultsLive do
   end
 
   def handle_event("gender_filter", %{"gender_filter" => gender_filter}, socket) do
-    # do some stuff
-    {:noreply, socket}
+    {:noreply,
+      socket
+      |> assign_gender_filter(gender_filter)
+      |> assign_products_with_average_ratings()
+      |> assign_dataset()
+      |> assign_chart()
+      |> assign_chart_svg()}
   end
 
   defp assign_products_with_average_ratings(
-    %{assigns: %{age_group_filter: age_group_filter}} = socket) do
+    %{assigns: %{
+      age_group_filter: age_group_filter,
+      gender_filter: gender_filter}} = socket) do
     socket
     |> assign(
         :products_with_average_ratings,
-        get_products_with_average_ratings(%{age_group_filter: age_group_filter})
+        get_products_with_average_ratings(
+          %{age_group_filter: age_group_filter},
+          %{gender_filter: gender_filter}
+          )
     )
   end
 
-  defp get_products_with_average_ratings(filter) do
-    case Catalog.products_with_average_ratings(filter) do
+  defp get_products_with_average_ratings(age_filter, gender_filter) do
+    case Catalog.products_with_average_ratings(age_filter, gender_filter) do
       [] ->
         Catalog.products_with_zero_ratings()
       products ->

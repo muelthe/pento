@@ -3,7 +3,6 @@
   
   
   <div id="survey-results-chart">
-    <% IO.inspect @id, label: "id in results" %>
     <.form
       for={:age_group_filter}
       phx-change="age_group_filter"
@@ -27,7 +26,7 @@
 
       <label>Filter by gender:</label>
       <select name="gender_filter" id="gender_filter">
-        <%= for gender <- ["male", "female", "other", "prefer not to say"] do %>
+        <%= for gender <- ["all", "male", "female", "other", "prefer not to say"] do %>
         <option value={gender} selected={@gender_filter == gender}>
           <%= gender %>
         </option>
