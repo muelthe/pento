@@ -3,7 +3,6 @@ defmodule PentoWeb.Admin.UserActivityLive do
   alias PentoWeb.Presence
 
   def update(_assigns, socket) do
-    # coming soon
     {:ok,
       socket
       |> assign_user_activity()}

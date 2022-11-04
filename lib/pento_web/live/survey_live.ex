@@ -2,7 +2,7 @@ defmodule PentoWeb.SurveyLive do
   use PentoWeb, :live_view
 
   alias Pento.{Survey, Catalog}
-  alias PentoWeb.{DemographicLive, RatingLive, Endpoint}
+  alias PentoWeb.{DemographicLive, RatingLive, Endpoint, Presence}
   alias Phoenix.LiveView.JS
 
   @survey_results_topic "survey_results"
@@ -15,6 +15,11 @@ defmodule PentoWeb.SurveyLive do
       |> assign_toggle_class()
       |> assign_toggle_comp()
     }
+  end
+
+  def handle_params(_params, _uri, socket) do
+    maybe_track_user(socket)
+    {:noreply, socket}
   end
 
   def handle_event("toggle_class", %{"toggle" => "+ expand"}, socket) do
@@ -47,6 +52,12 @@ defmodule PentoWeb.SurveyLive do
 
   def handle_info({:created_rating, updated_product, product_index}, socket) do
     {:noreply, handle_rating_created(socket, updated_product, product_index)}
+  end
+
+  defp maybe_track_user(%{assigns: %{current_user: current_user}} = socket) do
+    if connected?(socket) do
+      Presence.track_number_of_survey_users(self(), current_user.email)
+    end
   end
 
   defp handle_rating_created(

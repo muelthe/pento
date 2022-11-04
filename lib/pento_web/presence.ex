@@ -4,9 +4,23 @@ defmodule PentoWeb.Presence do
   pubsub_server: Pento.PubSub
 
   alias PentoWeb.Presence
-  alias Pento.Accounts
 
   @user_activity_topic "user_activity"
+  @number_of_survey_users_topic "number_of_survey_users"
+
+  def track_number_of_survey_users(pid, user_email) do
+    Presence.track(
+      pid,
+      @number_of_survey_users_topic,
+      "users",
+      %{users: [%{email: user_email}]}
+    )
+  end
+
+  def number_of_survey_users do
+    Presence.list(@number_of_survey_users_topic)
+    |> count_number_of_survey_users()
+  end
 
   def track_user(pid, product, user_email) do
     Presence.track(
@@ -16,6 +30,14 @@ defmodule PentoWeb.Presence do
       %{users: [%{email: user_email}]}
     )
   end
+
+  defp count_number_of_survey_users(%{"users" => %{metas: metas}}) do
+    Enum.map(metas, &users_from_meta_map/1)
+    |> Enum.uniq()
+    |> Enum.count
+  end
+
+  defp count_number_of_survey_users(_empty_map), do: 0
 
   def list_products_and_users do
     Presence.list(@user_activity_topic)
