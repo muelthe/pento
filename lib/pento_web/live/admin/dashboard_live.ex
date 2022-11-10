@@ -23,7 +23,7 @@ defmodule PentoWeb.Admin.DashboardLive do
 
   def handle_info(%{event: "rating_created"}, socket) do
     send_update(
-      PentoWeb.Admin.SurveyResultsLive,
+      PentoWeb.SurveyResultsLive,
       id: socket.assigns.survey_results_component_id
     )
 

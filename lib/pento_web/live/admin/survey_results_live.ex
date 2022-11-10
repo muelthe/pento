@@ -1,4 +1,4 @@
-defmodule PentoWeb.Admin.SurveyResultsLive do
+defmodule PentoWeb.SurveyResultsLive do
   use PentoWeb, :live_component
   use PentoWeb, :chart_live
 
